@@ -6,6 +6,7 @@ import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://www.niklas.fyi",
+  // site: "https://www.niklas.fyi",
+  site: "https://niklasdotfyi-nano.vercel.app",
   integrations: [mdx(), sitemap(), tailwind(), icon()]
 });
