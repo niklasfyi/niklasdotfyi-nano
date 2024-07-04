@@ -1,0 +1,35 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Container from "@components/Container.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import { BLOG } from "@consts";
+import { getAllCollections } from "@lib/utils";
+
+const all = (await getAllCollections()).sort(
+  (a, b) => b.data.published.valueOf() - a.data.published.valueOf(),
+);
+---
+
+<PageLayout title={BLOG.TITLE} description={BLOG.DESCRIPTION}>
+  <Container>
+    <div class="space-y-10">
+      <div class="animate font-semibold text-black dark:text-white">All</div>
+      <div class="space-y-4">
+        <section class="animate space-y-4">
+          <div>
+            <ul class="flex flex-col gap-4">
+              {
+                all.map((post) => (
+                  <li>
+                    <ArrowCard entry={post} />
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          {all}
+        </section>
+      </div>
+    </div>
+  </Container>
+</PageLayout>

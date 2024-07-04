@@ -1,0 +1,72 @@
+---
+import Container from "@components/Container.astro";
+import PageLayout from "@layouts/PageLayout.astro";
+import ArrowCard from "@components/ArrowCard.astro";
+import Link from "@components/Link.astro";
+import SocialList from "@components/SocialList.astro";
+import { SITE, HOME } from "@consts";
+import { getAllCollections } from "@lib/utils";
+
+const all = (await getAllCollections())
+  .filter((post) => !post.data.draft)
+  .sort((a, b) => b.data.published.valueOf() - a.data.published.valueOf())
+  .slice(0, SITE.NUM_POSTS_ON_HOMEPAGE);
+---
+
+<PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
+  <Container>
+    <div class="space-y-16">
+      <section class="h-card">
+        <h4 class="animate font-semibold text-black dark:text-white">
+          Hi, I'm <a
+            class="p-name u-uid u-url"
+            rel="me"
+            href="https://www.niklas.fyi"
+            ><b class="font-bold"
+              ><span class="p-given-name">Niklas</span>&nbsp;<span
+                class="p-family-name">Siefke</span
+              ></b
+            ></a
+          > (<span class="p-pronouns"
+            ><span class="p-x-pronoun-nominative p-pronoun-nominative p-pronoun"
+              >he</span
+            >/<span class="p-pronoun-oblique p-x-pronoun-oblique">him</span
+            >/<span class="p-pronoun-possessive p-x-pronoun-possessive"
+              >his</span
+            ></span
+          >) <span class="text-xl">👋🏻</span>
+        </h4>
+        <article class="space-y-4">
+          <p class="animate">
+            👨‍💻 <span class="p-job-title">Software Engineer</span> at <a
+              class="p-org h-card"
+              href="https://www.mazemap.com/">MazeMap</a
+            > 🌍 | <span class="p-locality">Trondheim</span>, <span
+              class="p-country-name">Norway</span
+            >
+            🇳🇴 | 🏡 Living a quite life with my wife Eleni & our dog, Krümel 🐶 |
+            📷 Dedicated Photographer 📸 | Smart Home Tinkerer 🔌 | 🏞️ Exploring
+            the great outdoors, one hike at a time ⛰️
+          </p>
+        </article>
+        <SocialList />
+      </section>
+
+      <section class="animate space-y-6">
+        <div class="flex flex-wrap gap-y-2 items-center justify-between">
+          <h5 class="font-semibold text-black dark:text-white">Latest posts</h5>
+          <Link href="/all"> See all posts </Link>
+        </div>
+        <ul class="flex flex-col gap-4">
+          {
+            all.map((post) => (
+              <li>
+                <ArrowCard entry={post} />
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+  </Container>
+</PageLayout>
