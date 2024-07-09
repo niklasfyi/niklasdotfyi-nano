@@ -22,4 +22,24 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { notes, articles };
+const checkins = defineCollection({
+  schema: {
+    type: "object",
+    properties: {
+      type: { type: "array", items: { type: "string" } },
+      properties: {
+        type: "object",
+        properties: {
+          name: { type: "array", items: { type: "string" } },
+          published: { type: "array", items: { type: "string" } },
+          content: { type: "array", items: { type: "string" } },
+          // Add other properties as needed
+        },
+        required: ["name", "published", "content"],
+      },
+    },
+    required: ["type", "properties"],
+  },
+});
+
+export const collections = { notes, articles, checkins };
