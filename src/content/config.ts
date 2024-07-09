@@ -22,4 +22,39 @@ const articles = defineCollection({
   }),
 });
 
-export const collections = { notes, articles };
+const checkins = defineCollection({
+  type: "data",
+  schema: z.object({
+    type: z.string(),
+    published: z.coerce.date(),
+    syndication: z.array(z.string().optional()),
+    checkin: z.object({
+      type: z.string(),
+      name: z.string(),
+      url: z.union([z.string(), z.array(z.string())]),
+      tel: z.string().optional(),
+      latitude: z.number().optional(),
+      longitude: z.number().optional(),
+      "street-address": z.string().optional(),
+      locality: z.string().optional(),
+      region: z.string().optional(),
+      "country-name": z.string().optional(),
+      "postal-code": z.string().optional(),
+    }),
+    location: z.object({
+      type: z.string().optional(),
+      latitude: z.number().optional(),
+      longitude: z.number().optional(),
+      "street-address": z.string().optional(),
+      locality: z.string().optional(),
+      region: z.string().optional(),
+      "country-name": z.string().optional(),
+      "postal-code": z.string().optional(),
+    }),
+    slug: z.string(),
+    url: z.string(),
+    "post-status": z.string(),
+  }),
+});
+
+export const collections = { notes, articles, checkins };

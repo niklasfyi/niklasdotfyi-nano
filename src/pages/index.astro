@@ -1,7 +1,7 @@
 ---
 import Container from "@components/Container.astro";
 import PageLayout from "@layouts/PageLayout.astro";
-import ArrowCard from "@components/ArrowCard.astro";
+import Card from "@components/Card.astro";
 import Link from "@components/Link.astro";
 import SocialList from "@components/SocialList.astro";
 import { SITE, HOME } from "@consts";
@@ -61,7 +61,7 @@ const all = (await getAllCollections())
           {
             all.map((post) => (
               <li>
-                <ArrowCard entry={post} />
+                <Card entry={post} />
               </li>
             ))
           }

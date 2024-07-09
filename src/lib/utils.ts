@@ -25,7 +25,8 @@ export function generateSlug(date: Date): string {
 export async function getAllCollections() {
   const articles = await getCollection("articles");
   const notes = await getCollection("notes");
-  return [...articles, ...notes];
+  const checkins = await getCollection("checkins");
+  return [...articles, ...notes, ...checkins];
 }
 
 export function readingTime(html: string) {
