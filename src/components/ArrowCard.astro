@@ -2,27 +2,38 @@
 import type { CollectionEntry } from "astro:content";
 
 type Props = {
-  entry: CollectionEntry<"articles"> | CollectionEntry<"notes">;
+  entry:
+    | CollectionEntry<"articles">
+    | CollectionEntry<"notes">
+    | CollectionEntry<"checkins">;
 };
 
 const { entry } = Astro.props;
 ---
 
 <a
-  href={`/${entry.slug}`}
+  href={`${entry.collection === "checkins" ? entry.data.url : entry.slug}`}
   class="relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out"
 >
   <div class="flex flex-col flex-1 truncate">
     {
-      entry.collection !== "notes" && (
+      (entry.collection === "articles") && (
         <div class="font-semibold">{entry.data.name}</div>
+      ) ||
+      (entry.collection === "notes") && (
+        <div class="font-semibold">Notes: {entry.slug}</div>
+      ) || 
+      (entry.collection === "checkins") && (
+        <div class="font-semibold">Checkins: {entry.data.slug}</div>
       )
     }
     <div class="text-sm">
-      {entry.body}
+      {
+        (entry.collection === "checkins") ? entry.data.checkin.name : entry.body
+      }
     </div>
     {
-      entry.data.categories && (
+      entry.collection !== "checkins" &&  entry.data.categories && (
         <div class="text-xs text-gray-500 dark:text-gray-400">
           {entry.data.categories.map((category) => `#${category}`).join(", ")}
         </div>
